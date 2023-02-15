@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import StoreApi from "../../services/fakeStoreApi";
-import { IoCartOutline } from "react-icons/io5";
+import Product from "./Product";
 
 const ProductPage = ({cartProducts, setCartProducts}) => {
     const [products, setProducts] = useState(JSON.parse(localStorage.getItem("products")));
@@ -14,7 +14,7 @@ const ProductPage = ({cartProducts, setCartProducts}) => {
     }, []);
 
 
-    async function addProduct (event) {
+    function addProduct (event) {
         const currentProduct = event.currentTarget.parentElement.parentElement;
         const storeProduct = products.find(product => product.id === Number(currentProduct.id));
         const existingProduct = cartProducts.find(product => product.id === storeProduct.id);
@@ -28,29 +28,13 @@ const ProductPage = ({cartProducts, setCartProducts}) => {
         }
 
     }
+
     return (
         <main id="products" className="fade-in">
             <div className="productsArea">
                 {
                     products.map(product => (
-                        <div className="productCard" id={product.id} key={product.id}>
-                            <div className="image-area">
-                                <a href={product.image}><img src={product.image} alt="" /></a>
-                            </div>
-                            <div className="desc-area">
-                                <span>Adidas</span>
-                                <p>{product.title.split(" ").slice(0, 2).join(" ")}</p>
-                                <div className="starArea">
-                                    <i className="fa fa-star star"></i>
-                                    <i className="fa fa-star star"></i>
-                                    <i className="fa fa-star star"></i>
-                                    <i className="fa fa-star star"></i>
-                                    <i className="fa fa-star star"></i>
-                                </div>
-                                <h4>R$ {product.price.toString().replace(".", ",")}</h4>
-                                <IoCartOutline name="cart-outline" className="cart" onClick={addProduct}></IoCartOutline>
-                            </div>
-                        </div>
+                        <Product product={product} addProduct={addProduct}/>
                     ))
                 }
             </div>

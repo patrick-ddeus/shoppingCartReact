@@ -51,7 +51,7 @@ const CartPage = ({cartProducts, setCartProducts}) => {
                                             <p>{product.title.split(" ").slice(0, 2).join(" ")}</p>
                                         </div>
                                     </td>
-                                    <td>R$ {product.price.toFixed(2).toLocaleString("pt-BR")}</td>
+                                    <td>{product.price.toLocaleString("pt-br", {style: "currency", currency: "BRL"})}</td>
                                     <td>
                                         <div className="buttons-block" id={`quantity-${product.id}`}>
                                             <button className="button-add" onClick={(event) => updateButton(event, true)}></button>
