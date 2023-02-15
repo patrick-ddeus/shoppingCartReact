@@ -34,7 +34,7 @@ const ProductPage = ({cartProducts, setCartProducts}) => {
             <div className="productsArea">
                 {
                     products.map(product => (
-                        <Product product={product} addProduct={addProduct}/>
+                        <Product product={product} addProduct={addProduct} key={product.id}/>
                     ))
                 }
             </div>

@@ -4,7 +4,7 @@ import { useLocation, Link } from "react-router-dom";
 import { IoBagOutline } from "react-icons/io5";
 const Header = ({ Logo, totalProducts }) => {
     const location = useLocation().pathname
-
+    
    return (
         <header id="header">
             <div className="header-content">

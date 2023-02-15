@@ -19,17 +19,15 @@ export default function App () {
     }
 
     return (
-        <Router>
-            <div className={`page-container `}>
+        <Router basename="/shoppingCartReact">
+            <div className={`page-container`}>
                 <Header Logo={"CartShop"} totalProducts={getTotalProductsFromCart()} />
-                <div className={""}>
-                    <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/products" element={<ProductPage cartProducts={cartProducts} setCartProducts={setCartProducts} />} />
-                        <Route path="/cart" element={<CartPage cartProducts={cartProducts} setCartProducts={setCartProducts} />} />
-                        <Route path="/contact" element={<ContactPage />} />
-                    </Routes>
-                </div>
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/products" element={<ProductPage cartProducts={cartProducts} setCartProducts={setCartProducts} />} />
+                    <Route path="/cart" element={<CartPage cartProducts={cartProducts} setCartProducts={setCartProducts} />} />
+                    <Route path="/contact" element={<ContactPage />} />
+                </Routes>
                 <Footer />
             </div>
         </Router>
