@@ -1,0 +1,11 @@
+{
+  "files": {
+    "main.js": "/static/js/main.b032d6ee.js",
+    "index.html": "/index.html",
+    "static/media/wave.svg": "/static/media/wave.191c46c1195ddd3ca9fad5412d0971a0.svg",
+    "main.b032d6ee.js.map": "/static/js/main.b032d6ee.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.b032d6ee.js"
+  ]
+}
