@@ -7,21 +7,21 @@ function ContactPage () {
         <>
             <div className="contact-page fade-in">
                 <div className="icons-area">
-                    <a href="" className="icon-link github-icon">
+                    <button className="icon-link github-icon">
                         <FaGithub />
-                    </a>
+                    </button>
 
-                    <a href="" className="icon-link facebook-icon">
+                    <button className="icon-link facebook-icon">
                         <FaFacebook />
-                    </a>
+                    </button>
 
-                    <a href="" className="icon-link reddit-icon">
+                    <button className="icon-link reddit-icon">
                         <FaRedditAlien />
-                    </a>
+                    </button>
 
-                    <a href="" className="icon-link twitter-icon">
+                    <button className="icon-link twitter-icon">
                         <FaTwitter />
-                    </a>
+                    </button>
 
                     <a href="https://www.instagram.com/patric_ddeus/" className="icon-link instagram-icon">
                         <FaInstagram />
