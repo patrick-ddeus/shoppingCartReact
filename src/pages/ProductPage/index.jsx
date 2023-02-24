@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import StoreApi from "../../services/fakeStoreApi";
-import Product from "./Product";
-
+import Product from "../../components/Product";
+import { ProductArea } from "./style";
 const ProductPage = ({cartProducts, setCartProducts}) => {
-    const [products, setProducts] = useState(JSON.parse(localStorage.getItem("products")));
+    const [products, setProducts] = useState(JSON.parse(localStorage.getItem("products")) || []);
 
     useEffect(() => {
         async function fetchProductList () {
@@ -26,18 +26,17 @@ const ProductPage = ({cartProducts, setCartProducts}) => {
         }else{
             setCartProducts([...cartProducts, {...storeProduct, quantity: 1}])
         }
-
     }
 
     return (
-        <main id="products" className="fade-in">
-            <div className="productsArea">
+        <main className="fade-in">
+            <ProductArea>
                 {
                     products.map(product => (
                         <Product product={product} addProduct={addProduct} key={product.id}/>
                     ))
                 }
-            </div>
+            </ProductArea>
         </main>
     );
 };

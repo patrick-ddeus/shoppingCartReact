@@ -1,10 +1,13 @@
 import React from 'react';
+import { FooterPage } from './styles';
 
-export default function Footer () {
+const Footer = () => {
     const data = new Date();
     return (
-        <footer className='footer-page'>
+        <FooterPage>
             <div>Copyright © {data.getFullYear()} @patric-ddeus</div>
-        </footer>
+        </FooterPage>
     );
 }
+
+export default Footer

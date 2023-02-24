@@ -1,27 +1,30 @@
 import React from "react";
 import NavItem from "./HeaderComponents/NavItem";
+import * as S from "./styles";
 import { useLocation, Link } from "react-router-dom";
 import { IoBagOutline } from "react-icons/io5";
 const Header = ({ Logo, totalProducts }) => {
-    const location = useLocation().pathname
-    
-   return (
-        <header id="header">
-            <div className="header-content">
+    const location = useLocation().pathname;
+
+    return (
+        <S.Container id="header">
+            <S.HeaderContent>
                 <h1>{Logo}</h1>
                 <nav>
-                    <ul className="nav-list">
+                    <S.NavList className="nav-list">
                         <NavItem name={"Home"} link={"/"} active={location === "/" ? true : false} />
                         <NavItem name={"Products"} link={"/products"} active={location === "/products" ? true : false} />
                         <NavItem name={"Contact"} link={"/contact"} active={location === "/contact" ? true : false} />
-                        <Link to={"/cart"} className="bag-link">
-                            <IoBagOutline className="bag-header" />
-                            <div className="notification">{totalProducts}</div>
-                        </Link>
-                    </ul>
+                        <S.BagLink>
+                            <Link to={"/cart"}>
+                                <IoBagOutline className="bag-header" />
+                                <S.Notification>{totalProducts}</S.Notification>
+                            </Link>
+                        </S.BagLink>
+                    </S.NavList>
                 </nav>
-            </div>
-        </header>
+            </S.HeaderContent>
+        </S.Container>
     );
 };
 

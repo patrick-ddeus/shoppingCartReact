@@ -1,12 +1,13 @@
 import React from 'react';
 import { FaGithub, FaFacebook, FaRedditAlien, FaTwitter, FaInstagram } from "react-icons/fa";
 import Wave from "../../assets/img/wave.svg";
+import * as S from './styles';
 
-function ContactPage () {
+const ContactPage = () => {
     return (
         <>
-            <div className="contact-page fade-in">
-                <div className="icons-area">
+            <S.ContactPage className="contact-page fade-in">
+                <S.IconsArea className="icons-area">
                     <button className="icon-link github-icon">
                         <FaGithub />
                     </button>
@@ -26,8 +27,8 @@ function ContactPage () {
                     <a href="https://www.instagram.com/patric_ddeus/" className="icon-link instagram-icon">
                         <FaInstagram />
                     </a>
-                </div>
-            </div>
+                </S.IconsArea>
+            </S.ContactPage>
             <div className="container-wave">
                 <img src={Wave} alt="" className="wave" style={{viewBox:"0 0 1366 220"}} />
             </div>

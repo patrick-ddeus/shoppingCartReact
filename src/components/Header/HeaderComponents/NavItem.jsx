@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
+import { NavItem as NavItemStyle } from "../styles";
 import React from "react";
 
 const NavItem = ({ link, name, active }) => {
     return (
-        <li className={`nav-item ${active ? "active" : ""}`}>
+        <NavItemStyle active={active}>
             <Link to={link}>
                 {name}
             </Link>
-        </li>
+        </NavItemStyle>
     );
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import ConfirmArea from "./ConfirmArea";
 import PriceArea from "./PriceArea";
-
+import * as S from "./styles";
 const CartPage = ({cartProducts, setCartProducts}) => {
     
     function removeProduct(event){
@@ -30,8 +30,8 @@ const CartPage = ({cartProducts, setCartProducts}) => {
 
     return (
         <main id="main" className="fade-in">
-            <h2 className="main-title">Shopping Cart</h2>
-            <section id="shopping-section">
+            <S.Title className="main-title">Shopping Cart</S.Title>
+            <S.ShoppingSection id="shopping-section">
                 <table className="products-list">
                     <thead>
                         <tr>
@@ -42,33 +42,33 @@ const CartPage = ({cartProducts, setCartProducts}) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {cartProducts.length === 0 ? <div className="no-product"> <h2>Você ainda não adicionou nada =( </h2> </div> :
+                        {cartProducts.length === 0 ? <S.ProductFallBack > <h2>Você ainda não adicionou nada =( </h2> </S.ProductFallBack> :
                             cartProducts.map(product => (
-                                <tr className="product-row" key={product.id}>
+                                <S.ProductRow key={product.id}>
                                     <td>
-                                        <div className="product-description">
+                                        <S.ProductDescription>
                                             <img src={product.image} alt="" width="90" />
                                             <p>{product.title.split(" ").slice(0, 2).join(" ")}</p>
-                                        </div>
+                                        </S.ProductDescription>
                                     </td>
                                     <td>{product.price.toLocaleString("pt-br", {style: "currency", currency: "BRL"})}</td>
                                     <td>
-                                        <div className="buttons-block" id={`quantity-${product.id}`}>
-                                            <button className="button-add" onClick={(event) => updateButton(event, true)}></button>
-                                            <input type="number" value={product.quantity} min="1" disabled className="quantity-input" />
-                                            <button className="button-rm" onClick={(event) => updateButton(event, false)}></button>
-                                        </div>
+                                        <S.ButtonsBlock id={`quantity-${product.id}`}>
+                                            <button className="button-add" onClick={(event) => updateButton(event, true)}>+</button>
+                                            <input type="number" value={product.quantity} min="1" disabled />
+                                            <button className="button-rm" onClick={(event) => updateButton(event, false)}>-</button>
+                                        </S.ButtonsBlock>
                                     </td>
                                     <td>
-                                        <button className="remove-btn" id={`remove-${product.id}`} onClick={removeProduct}>Remover</button>
+                                        <S.RemoveProduct id={`remove-${product.id}`} onClick={removeProduct}>Remover</S.RemoveProduct>
                                     </td>
-                                </tr>
+                                </S.ProductRow>
                             ))}
                     </tbody>
                 </table>
                 <PriceArea total={getTotal()}/>
                 <ConfirmArea />
-            </section>
+            </S.ShoppingSection>
         </main>
     );
 };
