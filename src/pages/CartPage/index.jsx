@@ -3,6 +3,7 @@ import ConfirmArea from "./ConfirmArea";
 import PriceArea from "./PriceArea";
 import * as S from "./styles";
 const CartPage = ({cartProducts, setCartProducts}) => {
+    const [inputValue, setInputValue] = React.useState(1);
     
     function removeProduct(event){
         const productId = event.currentTarget.id.split("-")[1]
@@ -11,15 +12,12 @@ const CartPage = ({cartProducts, setCartProducts}) => {
         setCartProducts(transformedProducts)
     }
 
-    function updateButton(event, increment){
-        const button = event.currentTarget
-        const id = button.parentElement.id.split("-")[1]
-
-        const input = increment ? button.nextElementSibling : button.previousElementSibling
-        input.value = increment ? ( Number(input.value) + 1) : input.value <= 1 ? 1 : input.value - 1
+    function updateButton(id, increment){
+        const incrementButton = increment ? inputValue + 1 : inputValue <= 1 ? 1 : inputValue -1
+        setInputValue(incrementButton)
         
         const transformedProducts = cartProducts.map(product => product.id === Number(id) ? 
-                                                    {...product, quantity: Number(input.value)} 
+                                                    {...product, quantity: Number(incrementButton)} 
                                                     : product )
         setCartProducts(transformedProducts)
     }
@@ -54,9 +52,9 @@ const CartPage = ({cartProducts, setCartProducts}) => {
                                     <td>{product.price.toLocaleString("pt-br", {style: "currency", currency: "BRL"})}</td>
                                     <td>
                                         <S.ButtonsBlock id={`quantity-${product.id}`}>
-                                            <button className="button-add" onClick={(event) => updateButton(event, true)}>+</button>
-                                            <input type="number" value={product.quantity} min="1" disabled />
-                                            <button className="button-rm" onClick={(event) => updateButton(event, false)}>-</button>
+                                            <button className="button-add" onClick={() => updateButton(product.id, true)}>+</button>
+                                            <input type="number" value={inputValue} min="1" disabled />
+                                            <button className="button-rm" onClick={() => updateButton(product.id, false)}>-</button>
                                         </S.ButtonsBlock>
                                     </td>
                                     <td>

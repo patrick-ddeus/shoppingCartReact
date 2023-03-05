@@ -10,8 +10,6 @@ const Product = ({ product, addProduct }) => {
             stars.push(<FaStar key={i} style={{color:"#BD9334",margin: "5px 1px"}} />);
         } else if (i === Math.ceil(product.rating.rate)) {
             stars.push(<FaStarHalfAlt key={i} style={{color:"#BD9334",margin: "5px 1px"}} />);
-        } else {
-            stars.push(<FaStar key={i} style={{margin: "5px 5px", color:"transparent"}}/>);
         }
     }
     
