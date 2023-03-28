@@ -7,7 +7,6 @@ import ContactPage from "./pages/ContactPage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { CartProvider } from "./hooks/CartProductContext";
 
-
 export default function App () {
     return (
         <CartProvider>
