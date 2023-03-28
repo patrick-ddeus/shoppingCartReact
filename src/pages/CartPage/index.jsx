@@ -1,31 +1,15 @@
 import React from "react";
+import { useCart } from "../../hooks/CartProductContext";
 import ConfirmArea from "./ConfirmArea";
 import PriceArea from "./PriceArea";
 import * as S from "./styles";
-const CartPage = ({cartProducts, setCartProducts}) => {
-    const [inputValue, setInputValue] = React.useState(1);
+
+const CartPage = () => {
+    const {cartProducts, removeProduct, updateQuantity } = useCart();
+    function getTotal () {
+        return cartProducts.reduce((acc, product) => acc + (product.price * product.quantity), 0);
+    }
     
-    function removeProduct(event){
-        const productId = event.currentTarget.id.split("-")[1]
-    
-        const transformedProducts = cartProducts.filter(product => product.id !== Number(productId))
-        setCartProducts(transformedProducts)
-    }
-
-    function updateButton(id, increment){
-        const incrementButton = increment ? inputValue + 1 : inputValue <= 1 ? 1 : inputValue -1
-        setInputValue(incrementButton)
-        
-        const transformedProducts = cartProducts.map(product => product.id === Number(id) ? 
-                                                    {...product, quantity: Number(incrementButton)} 
-                                                    : product )
-        setCartProducts(transformedProducts)
-    }
-
-    function getTotal(){
-        return cartProducts.reduce((acc, product) => acc + (product.price * product.quantity), 0)
-    }
-
     return (
         <main id="main" className="fade-in">
             <S.Title className="main-title">Shopping Cart</S.Title>
@@ -49,22 +33,22 @@ const CartPage = ({cartProducts, setCartProducts}) => {
                                             <p>{product.title.split(" ").slice(0, 2).join(" ")}</p>
                                         </S.ProductDescription>
                                     </td>
-                                    <td>{product.price.toLocaleString("pt-br", {style: "currency", currency: "BRL"})}</td>
+                                    <td>{product.price.toLocaleString("pt-br", { style: "currency", currency: "BRL" })}</td>
                                     <td>
                                         <S.ButtonsBlock id={`quantity-${product.id}`}>
-                                            <button className="button-add" onClick={() => updateButton(product.id, true)}>+</button>
-                                            <input type="number" value={inputValue} min="1" disabled />
-                                            <button className="button-rm" onClick={() => updateButton(product.id, false)}>-</button>
+                                            <button className="button-add" onClick={() => updateQuantity(product.id, true)}>+</button>
+                                            <input type="number" value={product.quantity} min="1" disabled />
+                                            <button className="button-rm" onClick={() => updateQuantity(product.id, false)}>-</button>
                                         </S.ButtonsBlock>
                                     </td>
                                     <td>
-                                        <S.RemoveProduct id={`remove-${product.id}`} onClick={removeProduct}>Remover</S.RemoveProduct>
+                                        <S.RemoveProduct id={`remove-${product.id}`} onClick={() => removeProduct(product.id)}>Remover</S.RemoveProduct>
                                     </td>
                                 </S.ProductRow>
                             ))}
                     </tbody>
                 </table>
-                <PriceArea total={getTotal()}/>
+                <PriceArea total={getTotal()} />
                 <ConfirmArea />
             </S.ShoppingSection>
         </main>

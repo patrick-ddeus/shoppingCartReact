@@ -1,39 +1,17 @@
-import React, { useState, useEffect } from "react";
-import StoreApi from "../../services/fakeStoreApi";
-import Product from "../../components/Product";
+import React from "react";
+import { useCart } from "../../hooks/CartProductContext";
+import Product from "./Product";
 import { ProductArea } from "./style";
-const ProductPage = ({cartProducts, setCartProducts}) => {
-    const [products, setProducts] = useState(JSON.parse(localStorage.getItem("products")) || []);
-
-    useEffect(() => {
-        async function fetchProductList () {
-            const productList = await StoreApi.getProducts();
-            setProducts(productList);
-        }
-        fetchProductList();
-    }, []);
-
-
-    function addProduct (event) {
-        const currentProduct = event.currentTarget.parentElement.parentElement;
-        const storeProduct = products.find(product => product.id === Number(currentProduct.id));
-        const existingProduct = cartProducts.find(product => product.id === storeProduct.id);
-
-        if (existingProduct) {
-            setCartProducts(cartProducts.map(product => product.id === existingProduct.id ?
-                                                        {...product, quantity: product.quantity + 1} :
-                                                        product));
-        }else{
-            setCartProducts([...cartProducts, {...storeProduct, quantity: 1}])
-        }
-    }
-
+const ProductPage = () => {
+    const products = JSON.parse(localStorage.getItem("products")) || [];
+    const { addProduct } = useCart();
+   
     return (
         <main className="fade-in">
             <ProductArea>
                 {
                     products.map(product => (
-                        <Product product={product} addProduct={addProduct} key={product.id}/>
+                        <Product product={product} addProduct={() => addProduct(products, product.id)} key={product.id} />
                     ))
                 }
             </ProductArea>

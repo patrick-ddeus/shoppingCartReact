@@ -3,8 +3,10 @@ import NavItem from "./HeaderComponents/NavItem";
 import * as S from "./styles";
 import { useLocation, Link } from "react-router-dom";
 import { IoBagOutline } from "react-icons/io5";
-const Header = ({ Logo, totalProducts }) => {
+import { useCart } from "../../hooks/CartProductContext";
+const Header = ({ Logo }) => {
     const location = useLocation().pathname;
+    const { getTotalProductsFromCart } = useCart()
 
     return (
         <S.Container id="header">
@@ -18,7 +20,7 @@ const Header = ({ Logo, totalProducts }) => {
                         <S.BagLink>
                             <Link to={"/cart"}>
                                 <IoBagOutline className="bag-header" />
-                                <S.Notification>{totalProducts}</S.Notification>
+                                <S.Notification>{getTotalProductsFromCart()}</S.Notification>
                             </Link>
                         </S.BagLink>
                     </S.NavList>
