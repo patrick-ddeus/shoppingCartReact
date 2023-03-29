@@ -5,17 +5,14 @@ const CartContext = createContext();
 const ACTION_TYPES = Object.freeze({
     addProduct: "addProduct",
     editProduct: "editProduct",
-    deleteproduct: "deleteProduct",
-})
+});
 
 function reducer (state, action) {
     switch (action.type) {
         case ACTION_TYPES.addProduct:
-            return [...state, action.payload.value];
+            return [...state, action.value];
         case ACTION_TYPES.editProduct:
-            return action.payload.value;
-        case ACTION_TYPES.deleteproduct:
-            return action.payload.value;
+            return action.value;
         default:
             return state;
     }
@@ -34,7 +31,6 @@ export function CartProvider ({ children }) {
 
     useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(cartProducts));
-
     }, [cartProducts]);
 
     return (
@@ -47,34 +43,47 @@ export function CartProvider ({ children }) {
 export function useCart () {
     const { cartProducts, dispatch } = useContext(CartContext);
 
-    const addProduct = (products, productId) => {
-        const storedProduct = products.find(product => product.id === productId);
-        const existingProduct = cartProducts.find(product => product.id === storedProduct.id);
-        if (existingProduct) {
-            const transformedCart = cartProducts.map(cartProduct => cartProduct.id === storedProduct.id ?
-                { ...cartProduct, quantity: cartProduct.quantity + 1 } : cartProduct);
-            dispatch({ type: ACTION_TYPES.editProduct, payload: { value: transformedCart } });
+    const addProductToCart = (products, productId) => {
+        const productToAdd = products.find(product => product.id === productId);
+        const existingProductInCart = cartProducts.find(product => product.id === productToAdd.id);
+
+        if (existingProductInCart) {
+            const updatedCart = cartProducts.map(product => {
+                if (product.id === productToAdd.id) {
+                    return { ...product, quantity: product.quantity + 1 };
+                } else {
+                    return product;
+                }
+            });
+
+            dispatch({ type: ACTION_TYPES.editProduct, value: updatedCart });
         } else {
-            dispatch({ type: ACTION_TYPES.addProduct, payload: { value: { ...storedProduct, quantity: 1 } } });
+            const productWithQuantity = { ...productToAdd, quantity: 1 };
+            dispatch({ type: ACTION_TYPES.addProduct, value: productWithQuantity });
         }
     };
 
     const removeProduct = (productId) => {
-        const transformedCart = cartProducts.filter(product => product.id !== productId);
-        dispatch({ type: ACTION_TYPES.deleteproduct, payload: { value: transformedCart } });
+        const updatedCartProducts = cartProducts.filter(({ id }) => id !== productId);
+        dispatch({ type: ACTION_TYPES.editProduct, value: updatedCartProducts });
     };
 
     const updateQuantity = (productId, increment) => {
-        const transformedCart = cartProducts.map(product => product.id === productId ?
-            { ...product, quantity: increment ? product.quantity + 1 : product.quantity <= 1 ? 1 : product.quantity - 1 }
-            : product);
+        const updatedCart = cart.map(product => {
+            if (product.id === productId) {
+                const newQuantity = increment ? product.quantity + 1 : product.quantity - 1;
+                const quantity = newQuantity <= 1 ? 1 : newQuantity; // Garante que a quantidade não seja menor que 1
+                return { ...product, quantity };
+            }
+            return product;
+        });
 
-        dispatch({ type: "editProduct", payload: { value: transformedCart} });
+        dispatch({ type: ACTION_TYPES.editProduct, value: updatedCart });
     };
 
     const getTotalProductsFromCart = () => {
         return cartProducts.reduce((acc, products) => acc + products.quantity, 0);
     };
 
-    return { cartProducts, addProduct, removeProduct, getTotalProductsFromCart, updateQuantity};
+    return { cartProducts, addProductToCart, removeProduct, getTotalProductsFromCart, updateQuantity };
 }
