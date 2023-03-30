@@ -48,7 +48,7 @@ export function useCart () {
         const existingProductInCart = cartProducts.find(product => product.id === productToAdd.id);
 
         if (existingProductInCart) {
-            const updatedCart = cartProducts.map(product => {
+            const updatedQuantity = cartProducts.map(product => {
                 if (product.id === productToAdd.id) {
                     return { ...product, quantity: product.quantity + 1 };
                 } else {
@@ -56,7 +56,7 @@ export function useCart () {
                 }
             });
 
-            dispatch({ type: ACTION_TYPES.editProduct, value: updatedCart });
+            dispatch({ type: ACTION_TYPES.editProduct, value: updatedQuantity });
         } else {
             const productWithQuantity = { ...productToAdd, quantity: 1 };
             dispatch({ type: ACTION_TYPES.addProduct, value: productWithQuantity });
@@ -69,7 +69,7 @@ export function useCart () {
     };
 
     const updateQuantity = (productId, increment) => {
-        const updatedCart = cart.map(product => {
+        const updatedCart = cartProducts.map(product => {
             if (product.id === productId) {
                 const newQuantity = increment ? product.quantity + 1 : product.quantity - 1;
                 const quantity = newQuantity <= 1 ? 1 : newQuantity; // Garante que a quantidade não seja menor que 1
